@@ -2,7 +2,7 @@
 
 # Desafio Módulo 3 - Backend
 
-[VOLTAR PARA SUMÁRIO](https://github.com/DANIEL-CUBOS/DESAFIO-M03)
+[VOLTAR PARA SUMÁRIO](https://github.com/cubos-academy/desafio-modulo-03)
 
 ## Back-end
 

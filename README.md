@@ -10,9 +10,9 @@ Após estar logado, ele poderá adicionar, remover, excluir e alterar produtos d
 
 Lembre-se que esse é um cliente muito importante e você é o responsável por entregar da melhor maneira a solução para o problema dele. Vamos nessa!
 
-[README Back-end](https://github.com/DANIEL-CUBOS/DESAFIO-M03/tree/main/back-end)
+[README Back-end](https://github.com/cubos-academy/desafio-modulo-03/tree/master/back-end)
 
-[README Front-end](https://github.com/DANIEL-CUBOS/DESAFIO-M03/tree/main/front-end)
+[README Front-end](https://github.com/cubos-academy/desafio-modulo-03/tree/master/front-end)
 
 **LEMBRE-SE**: Feito é melhor que perfeito!!!
 
