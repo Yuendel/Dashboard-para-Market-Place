@@ -10,20 +10,23 @@ A empresa que você está trabalhando recebeu uma demanda de um cliente muito im
 
 Telas que precisam ser desenvolvidas:
 
-## Área não logada (Antes do login)
+## Áreas não protegidas
 
-### Cadastro de usuário:
-Nessa tela precisaremos ter um formulário onde iremos inserir informações para que o cadastro seja efetivado, veja abaixo dicas e regras:
-- Regras:
-    - É preciso já no front-end fazer uma validação de igualdade de senhas (senha e confirmação de senha);
-    - Validar se os campos obrigatórios estão preenchidos antes de enviar a requisição para o back-end;
-    - Depois do cadastro efetuado devemos redirecionar o usuário para a tela de login;
-    - Campos que precisam ser criados na tela:
+### Cadastro de usuário: `/cadastro`
+- Funcionalidades obrigatórias:
+    - Validar a igualdade das senhas
+    - Validar os campos obrigatórios (consultar nos requisitos do back-end)
+    - Enviar os dados do formulário para a rota `POST /usuarios`
+    - Redirecionar para a rota de login (`/`);
+    - Inputs:
         - nome
         - nome_loja
         - email
         - senha
-        - confirmação de senha
+        - senhaConfirmacao
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
+        
 <details>
     <summary>Dicas</summary>
     <ul>
@@ -31,25 +34,24 @@ Nessa tela precisaremos ter um formulário onde iremos inserir informações par
     <li><code>react-router-dom</code></li>
     <li><code>fetch</code></li>
     <li>
-        components de <code>input</code>,             <code>buttons</code> e <code>links</code> do Material UI
-    <li>
-        Wireframe da tela: <img src="https://i.imgur.com/gYEeI6D.jpg">
-    </li>
+        componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Alert</code> e <code>Button</code> do Material UI
     </li>
     </ul>
 </details>
 
 
 
-### Login: 
-Na tela de login precisaremos fazer uma requisição para o back-end com a intenção de validar as credenciais de acesso (e-mail e senha), após isso precisaremos armazenar as informações de token para que possamos usar nas demais requisições internas da dashboard, veja abaixo dicas e regras:
-
-- Regras:
-    - Requisição para validar as credenciais;
-    - Armazenar token para usar nas próximas requisições;
-    - Campos que precisam ser criados:
+### Login: `/`
+- Funcionalidades obrigatórias:
+    - Validar os campos obrigatórios (consultar nos requisitos do back-end)
+    - Enviar os dados do formulário para a rota `POST /login`
+    - Salvar o `token` em um *contexto*
+    - Redirecionar para a rota de produtos (`/produtos`);
+    - Inputs:
         - email
         - senha
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
 
 <details>
     <summary>Dicas</summary>
@@ -57,128 +59,161 @@ Na tela de login precisaremos fazer uma requisição para o back-end com a inten
     <li><code>react-hook-form</code></li>
     <li><code>react-router-dom</code></li>
     <li><code>fetch</code></li>
+    <li><code>context</code></li>
     <li>
-        components de <code>input</code>,             <code>buttons</code> e <code>links</code> do Material UI
-    </li>
-    <li> persistir (armazenar) <code>token</code> para utilizarmos em requições futuras
-    </li>
-    <li>
-        Wireframe da tela: <img src="https://i.imgur.com/ZJFQ0V3.jpg">
+        componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Alert</code> e <code>Button</code> do Material UI
     </li>
     </ul>
 </details>
 
-## Área logada (após login)
+## Áreas protegidas
 
-## Navbar
-Criar uma `navbar` para podermos navegar entre  perfil do usuário e loja, veja abaixo dicas:
+### Produtos: `/produtos`
+
+- Funcionalidades obrigatórias:
+    - Carregamento dos produtos da loja (`GET /produtos`)
+    - Ao clicar no card do produto, redirecionar para a rota de (`/produto/:id/editar`)
+    - Ao clicar no icone de lixo no card do produto, abrir um modal e se o cliente confirmar, deletar o produto (`DELETE /produtos/:id`)
+    - Ao clicar no botão de "ADICIONAR PRODUTO", redirecionar para a rota de (`/produtos/novo`) 
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
+
+<details>
+    <summary>Dicas</summary>
+    <ul>
+    <li><code>fetch</code></li>
+    <li><code>context</code></li>
+    <li><code>react-router-dom</code></li>
+    <li>
+    componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Snackbar</code>code>, <code>Alert</code>, <code>Grid</code> e <code>Button</code> do Material UI
+    </li>
+    </ul>
+</details>
+
+### Editar Produtos: `/produtos/:id/editar`
+
+- Funcionalidades obrigatórias:
+    - Como a atualização dos dados do produto pode ser parcial (somente um campo por ex), não é obrigatório carregar os dados do produto nesta tela e nem verificar os dados obrigatórios.
+    - Enviar os dados do formulário para a rota `PUT /produtos/:id`
+    - Redirecionar para a rota de produtos (`/produtos`);
+    - Inputs:
+        - nome 
+        - preco
+        - estoque
+        - descricao
+        - imagem (link para uma imagem)
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
+
+<details>
+    <summary>Dicas</summary>
+    <ul>
+    <li><code>fetch</code></li>
+    <li><code>react-hook-form</code></li>
+    <li><code>context</code></li>
+    <li><code>react-router-dom</code></li>
+    <li>
+    componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Snackbar</code>, <code>Alert</code> e <code>Button</code> do Material UI
+    </li>
+    <li><img src="https://i.imgur.com/OAxmxYB.png"></li>
+    </ul>
+</details>
+
+### Adicionar Produtos: `/produtos/novo`
+
+- Funcionalidades obrigatórias:
+    - Enviar os dados do formulário para a rota `POST /produtos`
+    - Redirecionar para a rota de produtos (`/produtos`);
+    - Inputs:
+        - nome 
+        - preco
+        - estoque
+        - descricao
+        - imagem (link para uma imagem)
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
+
+<details>
+    <summary>Dicas</summary>
+    <ul>
+    <li><code>fetch</code></li>
+    <li><code>react-hook-form</code></li>
+    <li><code>context</code></li>
+    <li><code>react-router-dom</code></li>
+    <li>
+    componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Snackbar</code>, <code>Alert</code> e <code>Button</code> do Material UI
+    </li>
+    </ul>
+</details>
+
+### Perfil de usuário: `/perfil`
+
+- Funcionalidades obrigatórias:
+    - Visualização dos dados do perfil.
+    - Redirecionar para a rota de perfil (`/perfil/editar`);
+    - Inputs (não precisamos controlá-los):
+        - nome 
+        - nome_loja
+        - email
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
+
+<details>
+    <summary>Dicas</summary>
+    <ul>
+    <li><code>fetch</code></li>
+    <li><code>context</code></li>
+    <li><code>react-router-dom</code></li>
+    <li>
+    componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Snackbar</code>code>, <code>Alert</code> e <code>Button</code> do Material UI
+    </li>
+    </ul>
+</details>
+
+### Edição de usuário: `/perfil/editar`
+
+- Funcionalidades obrigatórias:
+    - Como a atualização dos dados do perfil pode ser parcial (somente um campo por ex), não é obrigatório carregar os dados do usuário nesta tela e nem verificar os dados obrigatórios.
+    - Se a senha for informada, validar a igualdade das senhas
+    - Enviar os dados do formulário para a rota `PUT /perfil`
+    - Redirecionar para a rota de perfil (`/perfil`);
+    - Inputs:
+        - nome 
+        - nome_loja
+        - email
+        - senha
+        - senhaConfirmacao
+- Funcionalidades extras: 
+    - Controle de estado de requisições (erro e carregamento)
+
+<details>
+    <summary>Dicas</summary>
+    <ul>
+    <li><code>fetch</code></li>
+    <li><code>react-hook-form</code></li>
+    <li><code>context</code></li>
+    <li><code>react-router-dom</code></li>
+    <li>
+    componentes <code>TextField</code>,             <code>Backdrop</code>, <code>CircularProgress</code>, <code>Snackbar</code>code>, <code>Alert</code> e <code>Button</code> do Material UI
+    </li>
+    <li><img src="https://i.imgur.com/OAxmxYB.png"></li>
+    </ul>
+</details>
+
+## Componentes
+
+### Navbar
+
+- Funcionalidades obrigatórias:
+    - Redirecionar o usuário para as rotas `/produtos` e `/perfil`
+    - Deslogar (remover o token do *contexto*)
 
 <details>
     <summary>Dicas</summary>
     <ul>
     <li><code>material-icons</code></li>
     <li><code>react-router-dom</code></li>
-    <li>
-        Wireframe da tela: <img src="https://i.imgur.com/lHKoHUm.png">
-    </li>
-    </ul>
-</details>
-
-### Perfil de usuário
-Na tela de perfil do usuário iremos ter duas funcionalidades, primeiramente ela deve exibir as informações do usuário logado no momento, depois será possível fazer a edição dos dados de modo que haja uma atualização do perfil do usuário, lembre-se de que para alterar a senha é preciso informar a senha atual e a nova senha, veja abaixo dicas e regras:
-- Regras:
-    - Requisição para carregar os dados do perfil (ao entrar na tela);
-    - Exibir as informações de perfil do usuário (menos a senha);
-    - Permitir a edição das informações do perfil;
-    - Ao realizar a atualização de senha é necessário informar a senha antiga, assim colocaremos um proteção para que somente quem possui a senha atual é que possa modificá-la;
-    - Não deve ser possível fazer a atualização do e-mail cadastrado;
-    - Após editar os campos, será necessário realizar uma requisição para o back-end enviando as informações atualizadas;
-    - Campos que precisam ser criados:
-        - nome 
-        - nome_loja
-        - email
-        - senha;
-
-<details>
-    <summary>Dicas</summary>
-    <ul>
-    <li><code>fetch</code></li>
-    <li><code>react-hook-form</code></li>
-    <li>
-        components de <code>input</code>,             <code>buttons</code> e <code>links</code> do Material UI
-    </li>
-    <li>
-        Wireframe da tela: <img src="https://i.imgur.com/bCS8izd.png">
-    </li>
-    </ul>
-</details>
-
-
-### Cadastro de produtos
-Na tela de cadastro de produtos não teremos muitos segredos, nela nós iremos realizar a adição de um novo produto na nossa listagem de produtos, para isso usaremos um formulário, veja abaixo dicas e regras:
-- Regras:
-    - Validação de campos do formulário;
-    - Realizar requisição para o back-end com o intuito de adicionar esse produto no banco de dados;
-    - Após a inserção precisamos limpar o formulário e redirecionarmos o usuário para a tela de listagem de produtos;
-    - Campos necessários no formulário:        
-        - nome
-        - preco
-        - estoque
-        - descricao
-        - imagem (campo de input onde adicionaremos o link de uma imagem da internet)
-        - usuario_id
-
-<details>
-    <summary>Dicas</summary>
-    <ul>
-    <li><code>react-hook-form</code></li>
-    <li><code>react-router-dom</code></li>
-    <li><code>fetch</code></li>
-    <li>
-        components de <code>input</code>,             <code>buttons</code> e <code>links</code> do Material UI
-    </li>
-    <li>
-        Wireframe da tela: 
-        <ul>
-            <li>Cadastro de produto: <img src="https://i.imgur.com/kChcO53.png"></li>
-            <li>Cadastro de produto: <img src="https://i.imgur.com/KpwcUvG.png"></li>
-        </ul>
-    </li>
-    </ul>
-</details>
-
-### Listagem de produtos cadastrados:
-Nessa tela nós teremos uma lista de produtos que estão cadastrados na nossa loja, essa lista terá um scroll horizontal, assim nós conseguiremos arrastar e ver mais produtos, veja abaixo dicas e regras:
-- Regras:
-    - Realizar requição para preencher a lista de produtos;
-    - Popular o `JSX` com a listagem de produtos;
-    - Ao pastar o mouse (`mouse hover`) num produto, deve aparecer a opção de excluir ou editar o produto;
-        - Ao clicar em editar devemos redirecionar o usuário para a tela de "cadastro de produtos" com os dados do produto atual preenchidos, nesse momento a tela de "cadastro de produtos" será a tela de "editar produtos";
-        - Ao Clicar em excluir devemos realizar a confirmação da exclusão (por meio de um `modal`) e após a resposta afirmativa do usuário, enviar a requisição para o back-end dizendo qual produto deve ser excluído;
-    - Termos uma lista horizontal de produtos cadastrados, essa lista contará com as seguintes informações:
-        - imagem
-        - nome
-        - estoque
-        - preco
-        - descricao
-    - Permitir a exclusão de um produto mediante confirmação via `modal`;
-
-<details>
-    <summary>Dicas</summary>
-    <ul>
-    <li><code>fetch</code></li>
-    <li>
-        components de <code>input</code>,             <code>buttons</code> e <code>links</code> do Material UI
-    </li>
-    <li>
-        Wireframe da tela: 
-        <ul>
-            <li>Listagem de produtos: <img src="https://i.imgur.com/mbtzDSd.png"></li>
-            <li>Dialog de confirmação - Parte 1: <img src="https://i.imgur.com/Snn7mQT.png"></li>
-            <li>Dialog de confirmação concedida: <img src="https://i.imgur.com/SkPXS9f.png"></li>
-            <li>Mouse Hover no produto: <img src="https://i.imgur.com/YkuNL8V.png"></li>
-        </ul>
-    </li>
+    <li>Usar o componente <code>NavLink</code> do react-router-dom para conseguir renderizar os icones ativos</li>
     </ul>
 </details>
 
@@ -191,15 +226,8 @@ Nessa tela nós teremos uma lista de produtos que estão cadastrados na nossa lo
 - Utilizar roteamento (`react-router-dom`);
 - Utilizar Material UI para criação das telas;
 - As requisições devem ser feitas utilizando `fetch`;
-- Integração ao back-end (sua API ou [inserir api do guido]());
+- Integração ao back-end (sua API ou [https://desafio-m03.herokuapp.com](https://desafio-m03.herokuapp.com));
 - Seguir a estrutura de layout do wireframe que está no arquivo `.fig` que se encontra na pasta raiz do desafio;
-
-## Requisitos extras
-- Gerenciar o estado das requisições (utilizar component do Material UI para informar erros das requisições);
-- Adicionar `skeleton` (Material UI) para carregamentos de informações vindas do back-end;
-- Gerenciar o estado de formulários utilizando `react-hook-form`;
-- Após a autenticação impedir que o usuário acesse a tela de login;
-- Criar função de `sign-out` (deslogar) com um botão na nossa navBar;
 
 
 ## Links Úteis
@@ -211,6 +239,21 @@ Nessa tela nós teremos uma lista de produtos que estão cadastrados na nossa lo
 - Documentação Material UI: https://material-ui.com/
 - Documentação Fetch: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
+
+## Aulas Úteis
+- [Context](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/24/05/2021/aula/40d22af1-7ae3-48ee-84e0-dc4858a46729/c882bfa1-fa0b-4b1a-86d6-f1ea094e2377)
+- [Gerenciando o estado de aplicações](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/26/05/2021/aula/812c9c5f-2657-4228-a3a9-e430036a421b/e0680e8a-8baf-4118-8b91-7f34930099a7)
+- [Opções com o Fetch](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/26/05/2021/aula/812c9c5f-2657-4228-a3a9-e430036a421b/986936fb-e2d6-4f8c-803c-2f2aceb4200c)
+- [Estilizando links ativos](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/31/05/2021/aula/092b294b-776e-485d-bd9f-14131cc48062/0f47afe2-a658-4b69-b2d2-f010eae5fa9a)
+- [Rotas protegidas](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/31/05/2021/aula/092b294b-776e-485d-bd9f-14131cc48062/380ba9df-4876-4ac5-b975-8290ade35a0e)
+- [Redirecionamento de rotas](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/31/05/2021/aula/092b294b-776e-485d-bd9f-14131cc48062/ed0feaa8-dbb3-4404-a6f1-30a42fe6e701)
+- [Parametros de rota](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/31/05/2021/aula/092b294b-776e-485d-bd9f-14131cc48062/009aca52-7f2e-4674-9716-dff03899d91f)
+- [Apresentando o react-hook-form](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/02/06/2021/aula/0c0ad3ca-7ca0-4d09-8852-7f8d421948c9/4cc61e3f-9eed-48ba-9b6b-0c61636a8bf1)
+- [Validações com o react-hook-form](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/02/06/2021/aula/0c0ad3ca-7ca0-4d09-8852-7f8d421948c9/c5ac1755-4b9c-46f4-850f-8bd053174047)
+- [useLocalStorage](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/07/06/2021/aula/7efd6594-b8d9-4c0c-a41e-5eb168e84dba/72bb0203-1b58-4e9d-9bed-1a0f854e7263)
+- [Primeiros componentes do Material UI](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/07/06/2021/aula/7efd6594-b8d9-4c0c-a41e-5eb168e84dba/acda31cc-43cf-4dc8-be51-738b38aa0d66)
+- [Resumão React](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/09/06/2021/aula/8b162b03-22e3-4c49-bf9f-d5388ae852c2/e12396ad-5ca2-4ad8-9303-c1c6b36e12e7)
+- [Continuação Resumão](https://plataforma.cubos.academy/curso/56bc9b33-842d-48ae-94ad-32d5e7a52b8d/data/11/06/2021/aula/8f161266-3cc9-491e-8ac2-6a5611fc719d/3abac795-c391-48ca-8c22-ec34ce62b381)
 
 **LEMBRE-SE**: Feito é melhor que perfeito!!!
 
