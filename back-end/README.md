@@ -296,6 +296,10 @@ Ela deverá:
 
 ---
 
+Api de Exemplo: https://desafio-m03.herokuapp.com
+
+Obs.: A collection do insomnia está anexada a esse repositório.
+
 **LEMBRE-SE**: Feito é melhor que perfeito!!!
 
 ###### tags: `back-end` `front-end` `módulo 3` `nodeJS` `PostgreSQL` `API REST` `desafio`
