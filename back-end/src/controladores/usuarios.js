@@ -1,5 +1,7 @@
 const conexao = require('../conexao');
 const securePassword = require('secure-password');
+const jwt = require('jsonwebtoken');
+const jwtSecret = require("../secret");
 
 const pwd = securePassword();
 
@@ -46,4 +48,64 @@ const cadastrarUsuario = async (req, res) => {
     }
 }
 
-module.exports = { cadastrarUsuario };
+const obterPerfil = async (req, res) => {
+    const { usuario } = req;
+
+    try {
+        return res.status(200).json({ usuario });
+
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+}
+
+const modificarPerfil = async (req, res) => {
+    const { usuario } = req;
+    const { nome, nome_loja, email, senha } = req.body;
+
+    if (nome) {
+        const query = 'update usuarios set nome = $1 where id = $2';
+        const usuarioAtualizado = await conexao.query(query, [nome, usuario.id]);
+
+        if (usuarioAtualizado.rowCount === 0) {
+            return res.status(400).json('Não foi possível atualizar o usuario');
+        }
+    }
+    if (nome_loja) {
+        const query = 'update usuarios set nome_loja = $1 where id = $2';
+        const usuarioAtualizado = await conexao.query(query, [nome_loja, usuario.id]);
+        if (usuarioAtualizado.rowCount === 0) {
+            return res.status(400).json('Não foi possível atualizar o usuario');
+        }
+    }
+    if (email) {
+        const verificaEmail = 'select * from usuarios where email = $1';
+        const { rowCount: usuarios } = await conexao.query(verificaEmail, [email]);
+
+        if (usuarios > 0) {
+            return res.status(400).json('Email ja cadastrado!')
+        }
+
+        const query = 'update usuarios set email = $1 where id = $2';
+        const usuarioAtualizado = await conexao.query(query, [email, usuario.id]);
+
+        if (usuarioAtualizado.rowCount === 0) {
+            return res.status(400).json('Não foi possível atualizar o usuario');
+        }
+    }
+    if (senha) {
+        const hash = (await pwd.hash(Buffer.from(senha))).toString("Hex");
+
+        const query = 'update usuarios set senha = $1 where id = $2';
+        const usuarioAtualizado = await conexao.query(query, [hash, usuario.id]);
+
+
+        if (usuarioAtualizado.rowCount === 0) {
+            return res.status(400).json('Não foi possível atualizar o usuario');
+        }
+    }
+
+    res.status(200).json('Dados atualizados com sucesso')
+}
+
+module.exports = { cadastrarUsuario, obterPerfil, modificarPerfil };

@@ -1,6 +1,7 @@
 const conexao = require('../conexao');
 const securePassword = require('secure-password');
 const jwt = require('jsonwebtoken');
+const jwtSecret = require("../secret");
 
 const pwd = securePassword();
 
@@ -44,7 +45,7 @@ const login = async (req, res) => {
                 break;
         }
 
-        const token = jwt.sign({ id: usuario.id }, 'senhaToken', { expiresIn: '24h' });
+        const token = jwt.sign({ id: usuario.id }, jwtSecret, { expiresIn: '24h' });
         const { senha: senhaProtegida, ...dadosUsuario } = usuario;
 
         return res.status(200).json({ usuario: dadosUsuario, token });
