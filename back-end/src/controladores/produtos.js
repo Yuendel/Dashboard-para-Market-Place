@@ -37,7 +37,7 @@ const listarProdutos = async (req, res) => {
     const { id } = req.usuario;
 
     try {
-        const query = 'select * from produtos where usuario_id = $1 ORDER BY categoria'
+        const query = 'select * from produtos where usuario_id = $1 ORDER BY categoria,preco ASC'
         const { rows: produtos } = await conexao.query(query, [id]);
 
         res.status(200).json(produtos);
