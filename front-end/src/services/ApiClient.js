@@ -8,7 +8,10 @@ async function post(point, data) {
             'Content-type': 'application/json'
         }
     });
-    return resposta.json();
+
+    const dados = await resposta.json();
+
+    return { dados, ok: resposta.ok };
 }
 
 async function get(point) {

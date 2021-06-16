@@ -49,9 +49,6 @@ function Login() {
       const response = await post('login', data);
       setCarregando(false);
 
-      console.log(response);
-
-
       if (!response.token) {
         setErro(response);
         return;

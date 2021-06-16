@@ -3,8 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import useStyles from './styles'
 import Typography from '@material-ui/core/Typography';
-import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,10 +11,13 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
 
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { post } from '../../services/ApiClient';
 
 function Cadastro() {
   const classes = useStyles();
@@ -40,34 +41,75 @@ function Cadastro() {
     event.preventDefault();
   };
 
+
   async function onSubmit(data) {
     setCarregando(true);
     setErro('');
-    try {
-      /*const resposta = await fetch('https://desafio-m03.herokuapp.com/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
 
-      const dados = await resposta.json();*/
+    console.log(data);
 
-      if (data.senha === '123') {
-        history.push('/produtos');
-      }
+    if (!data.nome) {
+      setErro('Campo nome obrigatorio!');
       setCarregando(false);
+      return;
+    }
+
+    if (!data.nome_loja) {
+      setErro('Campo nome da loja obrigatorio!');
+      setCarregando(false);
+      return;
+    }
+
+    if (!data.email) {
+      setErro('Campo email obrigatorio!');
+      setCarregando(false);
+      return;
+    }
+
+    if (!data.senha) {
+      setErro('Campo senha obrigatorio!');
+      setCarregando(false);
+      return;
+    }
+
+    if (!values.trypassword) {
+      setErro(`Campo "repita a senha" obrigatorio!`);
+      setCarregando(false);
+      return;
+    }
+
+    if (values.password !== values.trypassword) {
+      setErro('Senhas diferem');
+      setCarregando(false);
+      return;
+    }
+
+    try {
+
+      const { dados, ok } = await post('usuarios', data);
+      setCarregando(false);
+
+      if (!ok) {
+        setErro(dados);
+        return;
+      }
+
+      history.push('/');
     } catch (error) {
       setErro(error.message);
     }
-
-
   }
 
   return (
     <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <Typography className={classes.titulo} variant="h4">Criar uma conta</Typography>
-      <TextField id="standard-basic" label="Nome" type='name' {...register('nome')} />
-      <TextField id="standard-basic" label="Nome da loja" type='name' {...register('nome_loja')} />
-      <TextField id="standard-basic" label="E-mail" type='email' {...register('email')} />
+
+      <TextField id="standard-basic" label="Nome" type='name' value={values.name} {...register('nome')} />
+
+      <TextField id="standard-basic" label="Nome da loja" type='name' value={values.nameShop} {...register('nome_loja')} />
+
+      <TextField id="standard-basic" label="E-mail" type='email' value={values.email} {...register('email')} />
+
       <FormControl className={clsx(classes.margin, classes.textField)}>
         <InputLabel htmlFor="standard-adornment-password">Senha</InputLabel>
         <Input
@@ -94,7 +136,6 @@ function Cadastro() {
         <InputLabel htmlFor="standard-adornment-password">Repita a senha</InputLabel>
         <Input
           id="standard-adornment-password"
-          {...register('senha')}
           type={values.showPassword ? 'text' : 'password'}
           value={values.trypassword}
           onChange={handleChange('trypassword')}
@@ -112,17 +153,12 @@ function Cadastro() {
         />
       </FormControl>
 
-      {erro && <Alert severity="error" className='erro'>
+      {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
 
-        <AlertTitle>Error</AlertTitle>
-        {erro}
-      </Alert>}
-      <Backdrop className={classes.backdrop} open={carregando} >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Button variant="contained" className={classes.blue} type='submit'>
-        CRIAR CONTA
-      </Button>
+      <Backdrop className={classes.backdrop} open={carregando} ><CircularProgress color="inherit" /></Backdrop>
+
+      <Button variant="contained" className={classes.blue} type='submit'>CRIAR CONTA</Button>
+
       <Typography variant="body2">Já possui uma conta? <a href='/'>ACESSE</a> </Typography>
     </form>
   );
