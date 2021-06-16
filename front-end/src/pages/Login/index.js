@@ -99,6 +99,7 @@ function Login() {
       <Button variant="contained" className={classes.blue} type='submit'>
         Entrar
       </Button>
+      <Typography variant="body2">Primeira vez aqui? <a href='/cadastro'>CRIE UMA CONTA</a> </Typography>
     </form>
   );
 }
