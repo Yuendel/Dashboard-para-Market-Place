@@ -1,28 +1,25 @@
-const BASE_URL = 'https://migii-dev.herokuapp.com/';
+const BASE_URL = 'https://desafio-m03.herokuapp.com/';
 
-async function post(resource, data) {
-    const resposta = await fetch(BASE_URL + resource, {
+async function post(point, data) {
+    const resposta = await fetch(BASE_URL + point, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             'Content-type': 'application/json'
         }
     });
-
     return resposta.json();
 }
 
-async function get(resource) {
-    const resposta = await fetch(BASE_URL + resource);
-
+async function get(point) {
+    const resposta = await fetch(BASE_URL + point);
     return resposta.json();
 }
 
-async function del(resource) {
-    const resposta = await fetch(BASE_URL + resource, {
+async function del(point) {
+    const resposta = await fetch(BASE_URL + point, {
         method: 'DELETE',
     });
-
     return resposta.json();
 }
 

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import useAuth from '../../hook/useAuth';
+import { post } from '../../services/ApiClient';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import useStyles from './styles'
@@ -13,7 +15,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
 
@@ -24,10 +26,8 @@ function Login() {
   const history = useHistory();
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
-  const [values, setValues] = React.useState({
-    password: '',
-    showPassword: false,
-  });
+  const [values, setValues] = React.useState({ password: '', showPassword: false, });
+  const { logar } = useAuth();
 
 
   const handleChange = (prop) => (event) => {
@@ -42,23 +42,28 @@ function Login() {
 
   async function onSubmit(data) {
     setCarregando(true);
-    setErro('');
+    setErro(``);
+
     try {
-      /*const resposta = await fetch('https://desafio-m03.herokuapp.com/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
 
-      const dados = await resposta.json();*/
-
-      if (data.senha === '123') {
-        history.push('/produtos');
-      }
+      const response = await post('login', data);
       setCarregando(false);
+
+      console.log(response);
+
+
+      if (!response.token) {
+        setErro(response);
+        return;
+      }
+      logar(response.token);
+
+      history.push('/produtos')
+
     } catch (error) {
       setErro(error.message);
     }
-
+    setCarregando(false);
 
   }
 
@@ -68,10 +73,7 @@ function Login() {
       <TextField id="standard-basic" label="E-mail" type='email' {...register('email')} />
       <FormControl className={clsx(classes.margin, classes.textField)}>
         <InputLabel htmlFor="standard-adornment-password">Senha</InputLabel>
-        <Input
-          id="standard-adornment-password"
-          {...register('senha')}
-          type={values.showPassword ? 'text' : 'password'}
+        <Input id="standard-adornment-password"{...register('senha')} type={values.showPassword ? 'text' : 'password'}
           value={values.password}
           onChange={handleChange('password')}
           endAdornment={
@@ -88,17 +90,12 @@ function Login() {
         />
       </FormControl>
 
-      {erro && <Alert severity="error" className='erro'>
+      {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
 
-        <AlertTitle>Error</AlertTitle>
-        {erro}
-      </Alert>}
-      <Backdrop className={classes.backdrop} open={carregando} >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Button variant="contained" className={classes.blue} type='submit'>
-        Entrar
-      </Button>
+      <Backdrop className={classes.backdrop} open={carregando} ><CircularProgress color="inherit" /></Backdrop>
+
+      <Button variant="contained" className={classes.blue} type='submit'>Entrar</Button>
+
       <Typography variant="body2">Primeira vez aqui? <a href='/cadastro'>CRIE UMA CONTA</a> </Typography>
     </form>
   );
