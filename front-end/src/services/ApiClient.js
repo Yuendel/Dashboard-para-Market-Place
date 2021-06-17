@@ -26,7 +26,7 @@ async function postAutenticado(point, data, token) {
         }
     });
 
-    console.log(token);
+
     const dados = await resposta.json();
 
     return { dados, ok: resposta.ok };
@@ -61,7 +61,9 @@ async function put(point, data, token) {
         }
     })
 
-    return resposta.json();
+    const dados = await resposta.json();
+
+    return { dados, ok: resposta.ok };
 }
 
 
