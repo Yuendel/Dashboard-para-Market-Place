@@ -16,8 +16,8 @@ async function post(point, data) {
     return { dados, ok: resposta.ok };
 }
 
-async function postAutenticado(data, token) {
-    const resposta = await fetch(BASE_URL + '/produtos', {
+async function postAutenticado(point, data, token) {
+    const resposta = await fetch(BASE_URL + point, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -26,14 +26,22 @@ async function postAutenticado(data, token) {
         }
     });
 
+    console.log(token);
     const dados = await resposta.json();
 
     return { dados, ok: resposta.ok };
 }
 
-async function get(point) {
-    const resposta = await fetch(BASE_URL + point);
-    return resposta.json();
+async function get(point, token) {
+    const resposta = await fetch(BASE_URL + point, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const dados = await resposta.json();
+
+    return { dados, ok: resposta.ok };
 }
 
 async function del(point) {

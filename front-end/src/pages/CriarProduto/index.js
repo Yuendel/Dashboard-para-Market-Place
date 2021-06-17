@@ -8,6 +8,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import useStyles from "./styles";
 import useAuth from "../../hook/useAuth";
 import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
 
 import { postAutenticado } from '../../services/ApiClient';
 
@@ -16,26 +17,27 @@ export default function CriarProduto() {
     const history = useHistory();
     const { user, token } = useAuth();
     const { register, handleSubmit } = useForm();
+    const [carregando, setCarregando] = useState(false);
 
 
     async function onSubmit(data) {
+        setCarregando(true);
+        console.log(data);
+        console.log(carregando);
         try {
-            const { dados, ok } = await postAutenticado(data, token);
-            console.log(token);
-            console.log(data);
+            const { dados, ok } = await postAutenticado('produtos', data, token);
 
             if (!ok) {
                 console.log(dados);
                 return;
             }
 
-            console.log(dados);
-
             history.push('/produtos');
 
         } catch (error) {
-            console.log(error.message);
+            console.log('Erro: ' + error.message);
         }
+        setCarregando(false);
     }
 
     return (

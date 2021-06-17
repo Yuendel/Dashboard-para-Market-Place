@@ -13,9 +13,6 @@ export default makeStyles((theme) => ({
     nomeLoja: {
         marginBottom: '5rem'
     },
-    tituloProduto: {
-
-    },
     produtos: {
         display: 'flex',
         flexDirection: 'column',
@@ -30,5 +27,9 @@ export default makeStyles((theme) => ({
         '&:hover': {
             color: "black",
         },
+    },
+    prods: {
+        display: 'flex',
+        gap: 25
     }
 }));
