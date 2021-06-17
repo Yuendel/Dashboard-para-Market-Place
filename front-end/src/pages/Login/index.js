@@ -46,14 +46,15 @@ function Login() {
 
     try {
 
-      const response = await post('login', data);
+      const { dados, ok } = await post('login', data);
       setCarregando(false);
 
-      if (!response.token) {
-        setErro(response);
+      if (!ok) {
+        setErro(dados);
         return;
       }
-      logar(response.token);
+
+      logar(dados.usuario, dados.token);
 
       history.push('/produtos')
 

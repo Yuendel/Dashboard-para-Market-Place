@@ -26,4 +26,6 @@ async function del(point) {
     return resposta.json();
 }
 
+
+
 export { post, get, del };

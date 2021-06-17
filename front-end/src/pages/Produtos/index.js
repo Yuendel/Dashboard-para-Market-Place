@@ -1,29 +1,28 @@
-import React from 'react';
-import useAuth from '../../hook/useAuth';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { React } from 'react';
+import useAuth from "../../hook/useAuth";
+import NavBar from '../../components/NavBar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import useStyles from './styles';
+import Button from "@material-ui/core/Button";
+import useStyles from "./styles";
+import { useHistory } from "react-router-dom";
 
 export default function Produtos() {
   const classes = useStyles();
-  const { token } = useAuth();
+  const { user } = useAuth();
+  const history = useHistory();
+
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {token}
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <>
+      <NavBar />
+      <div className={classes.produtos}>
+        <Typography variant="h3" component="h2" className={classes.nomeLoja} >
+          {user.nome_loja}
+        </Typography>
+        <Typography variant="h4" component="h2" className={classes.tituloProduto}>
+          Seus produtos
+        </Typography>
+        <Button variant="contained" className={classes.blue} onClick={() => history.push(`/produtos/novo`)}>Adicionar Produto</Button>
+      </div>
+    </>
   );
 }
