@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
+import Card from '../../components/Card';
+
 
 export default function Produtos() {
   const classes = useStyles();
@@ -21,6 +23,7 @@ export default function Produtos() {
         <Typography variant="h4" component="h2" className={classes.tituloProduto}>
           Seus produtos
         </Typography>
+        <Card />
         <Button variant="contained" className={classes.blue} onClick={() => history.push(`/produtos/novo`)}>Adicionar Produto</Button>
       </div>
     </>
