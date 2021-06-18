@@ -16,7 +16,7 @@ export default makeStyles((theme) => ({
     adicionarProduto: {
         display: "flex",
         flexDirection: "column",
-        paddingBottom: 83,
+        paddingBottom: 80,
     },
     input: {
         width: '24.5rem',

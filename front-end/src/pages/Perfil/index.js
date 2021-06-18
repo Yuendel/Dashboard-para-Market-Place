@@ -6,29 +6,40 @@ import Button from "@material-ui/core/Button";
 import useStyles from "./styles";
 import useAuth from "../../hook/useAuth";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { get } from '../../services/ApiClient';
+import { Alert } from '@material-ui/lab';
+import Loading from "../../components/Loading";
+
+
+
 export default function Perfil() {
     const { user, logar, token } = useAuth();
     const classes = useStyles();
     const history = useHistory();
-
+    const [erro, setErro] = useState('');
+    const [carregando, setCarregando] = useState(false);
     useEffect(() => {
         buscarPerfil();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     async function buscarPerfil() {
-
+        setCarregando(true);
+        setErro(``);
         try {
             const { dados, ok } = await get('perfil', token);
 
             if (!ok) {
-                console.log(dados);
+                setErro('Erro: ' + dados);
+                setCarregando(false);
                 return;
             }
             logar(dados, token);
+            setCarregando(false);
         } catch (error) {
-            console.log(error.message);
+            setErro('Erro: ' + error.message);
+            setCarregando(false);
         }
     }
 
@@ -77,6 +88,9 @@ export default function Perfil() {
                     />
                 </div>
                 <Divider />
+                {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
+
+                {carregando && <Loading open={carregando} />}
                 <Button variant="contained" className={classes.blue} onClick={() => history.push("/perfil/editar")}>Editar perfil</Button>
             </div>
         </div>

@@ -12,8 +12,8 @@ import clsx from 'clsx';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Alert } from '@material-ui/lab';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Backdrop from '@material-ui/core/Backdrop';
+
+import Loading from "../../components/Loading";
 
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -97,6 +97,7 @@ function Cadastro() {
       history.push('/');
     } catch (error) {
       setErro(error.message);
+      setCarregando(false);
     }
   }
 
@@ -155,7 +156,7 @@ function Cadastro() {
 
       {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
 
-      <Backdrop className={classes.backdrop} open={carregando} ><CircularProgress color="inherit" /></Backdrop>
+      <Loading open={carregando} />
 
       <Button variant="contained" className={classes.blue} type='submit'>CRIAR CONTA</Button>
 

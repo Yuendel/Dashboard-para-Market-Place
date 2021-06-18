@@ -15,7 +15,7 @@ import clsx from 'clsx';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Alert } from '@material-ui/lab';
-
+import Loading from "../../components/Loading";
 
 import { useForm } from 'react-hook-form';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -47,7 +47,7 @@ function Cadastro() {
 
     async function onSubmit(data) {
         setCarregando(true);
-        setErro('');
+        setErro(``);
 
         if (data.senha) {
             if (values.password !== values.trypassword) {
@@ -60,16 +60,17 @@ function Cadastro() {
         try {
 
             const { dados, ok } = await put('perfil', data, token);
-            setCarregando(false);
 
             if (!ok) {
-                setErro(dados);
+                setErro('Erro:' + dados);
+                setCarregando(false);
                 return;
             }
-            console.log(dados);
+            setCarregando(false);
             history.push('/perfil');
         } catch (error) {
-            setErro(error.message);
+            setErro('Erro: ' + error.message);
+            setCarregando(false);
         }
     }
 
@@ -135,7 +136,7 @@ function Cadastro() {
             </FormControl>
             <Divider />
             {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
-
+            {carregando && <Loading open={carregando} />}
             <div className={classes.botoes}>
                 <NavLink to="/produtos">CANCELAR</NavLink>
 

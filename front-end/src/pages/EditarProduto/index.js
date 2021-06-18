@@ -11,7 +11,8 @@ import useAuth from "../../hook/useAuth";
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from 'react';
 import { get, put } from '../../services/ApiClient';
-
+import { Alert } from '@material-ui/lab';
+import Loading from "../../components/Loading";
 
 
 
@@ -22,41 +23,52 @@ export default function CriarProduto() {
     const { register, handleSubmit } = useForm();
     const [produto, setProduto] = useState([]);
     const { id } = useParams();
+    const [carregando, setCarregando] = useState(false);
+    const [erro, setErro] = useState('');
 
     useEffect(() => {
         buscarProduto();
-        console.log(produto)
+        console.log(produto);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     async function buscarProduto() {
-
+        setCarregando(true);
+        setErro(``);
         try {
             const { dados, ok } = await get(`produtos/${id}`, token)
 
 
             if (!ok) {
-                console.log(dados);
+                setErro(dados);
+                setCarregando(false);
+                return;
             }
             setProduto(dados);
-
+            setCarregando(false);
         } catch (error) {
-            console.log(error.message)
+            setErro('Erro:' + error.message);
+            setCarregando(false);
         }
     }
 
     async function onSubmit(data) {
+        setCarregando(true);
+        setErro(``);
         try {
             const { dados, ok } = await put(`produtos/${id}`, data, token);
 
             if (!ok) {
-                console.log(dados);
+                setErro(dados);
+                setCarregando(false);
                 return;
             }
 
             history.push('/produtos');
 
         } catch (error) {
-            console.log('Erro: ' + error.message);
+            setErro('Erro:' + error.message);
+            setCarregando(false);
         }
     }
 
@@ -132,7 +144,9 @@ export default function CriarProduto() {
                         image={produto.imagem}
                         title={produto.descricao}
                     />
+                    {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
 
+                    {carregando && <Loading open={carregando} />}
 
                 </form>
 

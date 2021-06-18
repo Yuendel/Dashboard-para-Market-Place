@@ -7,7 +7,8 @@ import useStyles from "./styles";
 import { useHistory } from "react-router-dom";
 import Card from '../../components/Card';
 import { get } from '../../services/ApiClient';
-
+import { Alert } from '@material-ui/lab';
+import Loading from "../../components/Loading";
 
 export default function Produtos() {
   const classes = useStyles();
@@ -15,32 +16,32 @@ export default function Produtos() {
   const history = useHistory();
   const [prod, setProd] = useState([]);
   const [erro, setErro] = useState('');
+  const [carregando, setCarregando] = useState(false);
 
-
+  useEffect(() => {
+    buscarProdutos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function buscarProdutos() {
+    setCarregando(true);
+    setErro('');
     try {
       const { dados, ok } = await get('produtos', token);
 
       if (!ok) {
         setErro(dados);
-        console.log(erro);
+        setCarregando(false);
         return;
       }
 
       setProd(dados);
-
+      setCarregando(false);
     } catch (error) {
+      setCarregando(false);
       return setErro(error.message);
     }
   }
-
-  useEffect(() => {
-    buscarProdutos();
-  }, []);
-
-
-
 
   return (
     <>
@@ -60,7 +61,13 @@ export default function Produtos() {
             )
           })}
         </div>
+
+
         <Button variant="contained" className={classes.blue} onClick={() => history.push(`/produtos/novo`)}>Adicionar Produto</Button>
+
+        {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
+
+        {carregando && <Loading open={carregando} />}
       </div>
     </>
   );

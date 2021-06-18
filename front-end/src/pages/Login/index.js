@@ -16,8 +16,7 @@ import clsx from 'clsx';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Alert } from '@material-ui/lab';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Backdrop from '@material-ui/core/Backdrop';
+import Loading from "../../components/Loading";
 
 
 function Login() {
@@ -28,7 +27,6 @@ function Login() {
   const [carregando, setCarregando] = useState(false);
   const [values, setValues] = React.useState({ password: '', showPassword: false, });
   const { logar } = useAuth();
-
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -59,7 +57,7 @@ function Login() {
       history.push('/produtos')
 
     } catch (error) {
-      setErro(error.message);
+      setErro('Erro:' + error.message);
     }
     setCarregando(false);
 
@@ -90,7 +88,7 @@ function Login() {
 
       {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
 
-      <Backdrop className={classes.backdrop} open={carregando} ><CircularProgress color="inherit" /></Backdrop>
+      {carregando && <Loading open={carregando} />}
 
       <Button variant="contained" className={classes.blue} type='submit'>Entrar</Button>
 

@@ -9,6 +9,8 @@ import useStyles from "./styles";
 import useAuth from "../../hook/useAuth";
 import { useForm } from "react-hook-form";
 import React, { useState } from 'react';
+import { Alert } from '@material-ui/lab';
+import Loading from "../../components/Loading";
 
 import { postAutenticado } from '../../services/ApiClient';
 
@@ -17,25 +19,27 @@ export default function CriarProduto() {
     const history = useHistory();
     const { user, token } = useAuth();
     const { register, handleSubmit } = useForm();
+    const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
 
 
     async function onSubmit(data) {
         setCarregando(true);
-        console.log(data);
-        console.log(carregando);
+        setErro(``);
+
         try {
             const { dados, ok } = await postAutenticado('produtos', data, token);
 
             if (!ok) {
-                console.log(dados);
+                setErro('Erro:' + dados);
+                setCarregando(false);
                 return;
             }
 
             history.push('/produtos');
-
         } catch (error) {
-            console.log('Erro: ' + error.message);
+            setErro('Erro: ' + error.message);
+            setCarregando(false);
         }
         setCarregando(false);
     }
@@ -97,6 +101,9 @@ export default function CriarProduto() {
                         {...register("imagem")}
                     />
                 </div>
+                {erro && <Alert severity="error" className='erro'>{erro}</Alert>}
+
+                {carregando && <Loading open={carregando} />}
                 <Divider />
                 <div className={classes.botoes}>
                     <NavLink to="/produtos">CANCELAR</NavLink>

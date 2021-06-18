@@ -28,7 +28,7 @@ export default makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
     textField: {
-        width: '25ch',
+        width: '10rem',
     },
     erro: {
         width: '100%',
