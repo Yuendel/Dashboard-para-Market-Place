@@ -7,7 +7,7 @@ export default makeStyles({
         minHeight: '21.8rem',
         marginBottom: '1rem',
         borderRadius: '1rem',
-        padding: '0.2rem',
+        zIndex: '1'
     },
     cardActions: {
         display: "flex",
@@ -16,5 +16,6 @@ export default makeStyles({
     imagem: {
         width: '12.5rem',
         height: '15.5rem',
+        borderRadius: '1rem'
     },
 });

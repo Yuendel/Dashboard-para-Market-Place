@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import ModalDelete from "../ModalDelete";
 import useStyles from './styles';
 
 export default function CardProduto(props) {
@@ -13,6 +14,12 @@ export default function CardProduto(props) {
     return (
         <Card className={classes.root}>
             <CardActionArea>
+                <ModalDelete
+                    id={props.id}
+                    buscarProdutos={props.buscarProdutos}
+                    setErro={props.erro}
+                    token={props.token}
+                />
                 <CardMedia
                     component="img"
                     alt={props.nome}

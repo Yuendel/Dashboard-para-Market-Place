@@ -14,6 +14,7 @@ export default function Produtos() {
   const { user, token } = useAuth();
   const history = useHistory();
   const [prod, setProd] = useState([]);
+  const [erro, setErro] = useState('');
 
 
 
@@ -22,14 +23,15 @@ export default function Produtos() {
       const { dados, ok } = await get('produtos', token);
 
       if (!ok) {
-        console.log(dados);
+        setErro(dados);
+        console.log(erro);
         return;
       }
-      console.log(dados);
+
       setProd(dados);
-      console.log(prod)
+
     } catch (error) {
-      return console.log(error.message);
+      return setErro(error.message);
     }
   }
 
@@ -42,7 +44,7 @@ export default function Produtos() {
 
   return (
     <>
-      <NavBar />
+      <NavBar selecionado="padrao" />
       <div className={classes.produtos}>
         <Typography variant="h3" component="h2" className={classes.nomeLoja} >
           {user.nome_loja}
@@ -54,7 +56,7 @@ export default function Produtos() {
 
           {prod.map((x) => {
             return (
-              <Card nome={x.nome} preco={x.preco} estoque={x.preco} descricao={x.descricao} imagem={x.imagem} />
+              <Card nome={x.nome} preco={x.preco} estoque={x.preco} descricao={x.descricao} imagem={x.imagem} id={x.id} buscarProdutos={buscarProdutos} token={token} />
             )
           })}
         </div>

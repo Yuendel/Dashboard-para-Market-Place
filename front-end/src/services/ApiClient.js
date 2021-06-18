@@ -44,11 +44,16 @@ async function get(point, token) {
     return { dados, ok: resposta.ok };
 }
 
-async function del(point) {
+async function del(point, token) {
     const resposta = await fetch(BASE_URL + point, {
         method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
-    return resposta.json();
+    const dados = await resposta.json();
+
+    return { dados, ok: resposta.ok };
 }
 
 async function put(point, data, token) {

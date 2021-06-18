@@ -26,10 +26,10 @@ export default function Navbar(props) {
     return (
         <AppBar position="fixed" className={classes.appbar}>
             <Toolbar className={classes.nav}>
-                {props.selecionado === "storeSelected" && (
+                {props.selecionado === "padrao" && (
                     <StoreSelected className={classes.cursor} />
                 )}
-                {props.selecionado !== "storeSelected" && (
+                {props.selecionado !== "padrao" && (
                     <Store className={classes.cursor} onClick={loja} />
                 )}
                 {props.selecionado === "perfil" && (
