@@ -28,7 +28,6 @@ export default function CriarProduto() {
 
     useEffect(() => {
         buscarProduto();
-        console.log(produto);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

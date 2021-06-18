@@ -7,10 +7,10 @@ export default makeStyles((theme) => ({
         width: 'min-content',
     },
     deleteIcon: {
-        padding: 12,
+        padding: 10,
+        position: 'absolute',
         backgroundColor: "#FF505F",
         borderRadius: "10rem",
-        position: 'absolute',
         margin: '1.2rem 0 0 1rem',
         zIndex: '2'
     },
@@ -18,8 +18,9 @@ export default makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         gap: 10,
-        padding: 15,
         marginTop: 15,
+        padding: 15,
+
     },
 }));
 

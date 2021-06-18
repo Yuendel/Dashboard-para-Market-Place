@@ -19,6 +19,7 @@ export default function Perfil() {
     const history = useHistory();
     const [erro, setErro] = useState('');
     const [carregando, setCarregando] = useState(false);
+
     useEffect(() => {
         buscarPerfil();
         // eslint-disable-next-line react-hooks/exhaustive-deps

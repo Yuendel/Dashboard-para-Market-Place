@@ -46,8 +46,6 @@ function Cadastro() {
     setCarregando(true);
     setErro('');
 
-    console.log(data);
-
     if (!data.nome) {
       setErro('Campo nome obrigatorio!');
       setCarregando(false);
