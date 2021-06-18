@@ -7,12 +7,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ModalDelete from "../ModalDelete";
 import useStyles from './styles';
+import { useHistory } from 'react-router-dom';
+
 
 export default function CardProduto(props) {
     const classes = useStyles();
+    const history = useHistory();
+
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} onClick={() => history.push(`/produtos/${props.id}/editar`)}>
             <CardActionArea>
                 <ModalDelete
                     id={props.id}

@@ -26,5 +26,6 @@ export default function useAuthProvider() {
         token,
         logar,
         deslogar,
+
     };
 }
