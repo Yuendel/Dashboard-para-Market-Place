@@ -57,7 +57,7 @@ export default function CriarProduto() {
                 <div className={classes.adicionarProduto}>
                     <TextField
                         className={classes.input}
-                        id="standard-basic"
+                        id="nomeProduto"
                         label="Nome do produto"
                         {...register("nome")}
                     />
@@ -89,13 +89,13 @@ export default function CriarProduto() {
                     </div>
                     <TextField
                         className={classes.input}
-                        id="standard-basic"
+                        id="descricao"
                         label="Descrição do produto"
                         {...register("descricao")}
                     />
                     <TextField
                         className={classes.input}
-                        id="standard-basic"
+                        id="imagem"
                         type="url"
                         label="Imagem"
                         {...register("imagem")}

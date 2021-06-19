@@ -47,7 +47,7 @@ export default function CardProduto(props) {
                     {props.estoque > 1 ? "UNIDADES" : "UNIDADE"}
                 </Typography>
                 <Typography gutterBottom variant="body2" component="p">
-                    R$ {String((props.preco / 100).toFixed(2)).replace(".", ",")}
+                    R$ {String((props.preco).toFixed(2)).replace(".", ",")}
                 </Typography>
             </CardActions>
         </Card>

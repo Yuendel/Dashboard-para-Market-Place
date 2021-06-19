@@ -9,6 +9,7 @@ import Card from '../../components/Card';
 import { get } from '../../services/ApiClient';
 import { Alert } from '@material-ui/lab';
 import Loading from "../../components/Loading";
+import Divider from "@material-ui/core/Divider";
 
 export default function Produtos() {
   const classes = useStyles();
@@ -57,12 +58,12 @@ export default function Produtos() {
 
           {prod.map((x) => {
             return (
-              <Card nome={x.nome} preco={x.preco} estoque={x.preco} descricao={x.descricao} imagem={x.imagem} id={x.id} buscarProdutos={buscarProdutos} token={token} />
+              <Card nome={x.nome} preco={x.preco} estoque={x.estoque} descricao={x.descricao} imagem={x.imagem} id={x.id} buscarProdutos={buscarProdutos} token={token} />
             )
           })}
         </div>
 
-
+        <Divider />
         <Button variant="contained" className={classes.blue} onClick={() => history.push(`/produtos/novo`)}>Adicionar Produto</Button>
 
         {erro && <Alert severity="error" className='erro'>{erro}</Alert>}

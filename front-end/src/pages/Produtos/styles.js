@@ -11,7 +11,8 @@ export default makeStyles((theme) => ({
         flexGrow: 1,
     },
     nomeLoja: {
-        marginBottom: '5rem'
+        marginTop: '-1rem',
+        marginBottom: '3rem'
     },
     produtos: {
         display: 'flex',
