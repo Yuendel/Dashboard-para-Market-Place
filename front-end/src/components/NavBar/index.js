@@ -26,18 +26,10 @@ export default function Navbar(props) {
     return (
         <AppBar position="fixed" className={classes.appbar}>
             <Toolbar className={classes.nav}>
-                {props.selecionado === "padrao" && (
-                    <StoreSelected className={classes.cursor} />
-                )}
-                {props.selecionado !== "padrao" && (
-                    <Store className={classes.cursor} onClick={loja} />
-                )}
-                {props.selecionado === "perfil" && (
-                    <UserSelected className={classes.cursor} />
-                )}
-                {props.selecionado !== "perfil" && (
-                    <User className={classes.cursor} onClick={perfil} />
-                )}
+                {props.selecionado === "padrao" && (<StoreSelected className={classes.cursor} />)}
+                {props.selecionado !== "padrao" && (<Store className={classes.cursor} onClick={loja} />)}
+                {props.selecionado === "perfil" && (<UserSelected className={classes.cursor} />)}
+                {props.selecionado !== "perfil" && (<User className={classes.cursor} onClick={perfil} />)}
                 <Close className={classes.close} onClick={deslogar} />
             </Toolbar>
         </AppBar>
